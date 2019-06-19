@@ -1,12 +1,57 @@
 <div class="row">
-  
     <div class="col-md-3">
-  
+      <!--FormSearch-->
+      <form [formGroup]="formSearch" (ngSubmit)="buscar(selectPais)">
+        <div class="form-group">
+          <label for="inputAutor">Autor</label>
+          <input type="text" class="form-control" id="inputAutor" placeholder="Escribe un Autor" formControlName="autor">
+        </div>
+
+        <div class="form-group">
+          <label for="selectPais">País</label>
+          <select class="selectpicker form-control" id="selectPais" #selectPais data-style="btn-info" data-live-search="true">
+          <optgroup label="América del Norte">
+            <option data-tokens="Bermudas">Bermudas</option>
+            <option data-tokens="Canada">Canadá</option>
+            <option data-tokens="Estados Unidos">Estados Unidos</option>
+            <option data-tokens="Groenlandia">Groenlandia</option>
+            <option data-tokens="Mexico">México</option>
+            <option data-tokens="San Pedro y Miquelón">San Pedro y Miquelón</option>
+          </optgroup>
+          <optgroup label="América Central">
+            <option data-tokens="Belice">Belice</option>
+            <option data-tokens="Costa Rica">Costa Rica</option>
+            <option data-tokens="El Salvador">El Salvador</option>
+            <option data-tokens="Guatemala">Guatemala</option>
+            <option data-tokens="Honduras">Honduras</option>
+            <option data-tokens="Nicaragua">Nicaragua</option>
+            <option data-tokens="Panama">Panamá</option>
+          </optgroup>
+          <optgroup label="América del Sur">
+              <option data-tokens="Argentina">Argentina</option>
+              <option data-tokens="Bolivia">Bolivia</option>
+              <option data-tokens="Brasil">Brasil</option>
+              <option data-tokens="Chile">Chile</option>
+              <option data-tokens="Colombia">Colombia</option>
+              <option data-tokens="Ecuador">Ecuador</option>
+              <option data-tokens="Guayana Francesa">Guayana Francesa</option>
+              <option data-tokens="Guyana">Guyana</option>
+              <option data-tokens="Paraguay">Paraguay</option>
+              <option data-tokens="Peru">Perú</option>
+              <option data-tokens="Surinam">Surinam</option>
+              <option data-tokens="Uruguay">Uruguay</option>
+              <option data-tokens="Venezuela">Venezuela</option>
+            </optgroup>
+          </select>
+        </div>
+            
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </form>
+      <!--/FormSearch-->    
     </div>
   
-    <div class="col-md-9">
-  
-      <!--.card-->
+    <div class="col-md-9"> 
+      <!--cardArticle-->
       <div class="card border-oval ">
         <div class="card-body">
           <h5 class="card-title text-primary">Titulo del Articulo</h5>
@@ -16,7 +61,6 @@
           <a href="#" class="btn btn-primary border-oval pl-4 pr-4 pt-1 float-right">Más</a>
         </div>
       </div>
-      <!--/card-->
-  
+      <!--/cardArticle-->
     </div> 
   </div>

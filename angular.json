@@ -24,12 +24,16 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/bootstrap-select/dist/css/bootstrap-select.css",
+              "src/assets/dist/css/select2.css",
               "src/styles.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+              "src/assets/dist/js/select2.js"
             ],
             "es5BrowserSupport": true
           },
