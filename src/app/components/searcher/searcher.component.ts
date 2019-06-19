@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit  } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 declare var $:any;
 
@@ -12,6 +12,7 @@ export class SearcherComponent implements AfterViewInit  {
 
   articles = [];
   formSearch:FormGroup;
+  autoresItems:FormArray;
 
   constructor(private formBuilder:FormBuilder) {  
     this.inicializarFormulario();
@@ -23,9 +24,25 @@ export class SearcherComponent implements AfterViewInit  {
 
   inicializarFormulario(){
     this.formSearch = this.formBuilder.group({
-      autor: [''],
+      autores: this.formBuilder.array([this.crearAutorItem()]),
       pais: ['']
     })
+  }
+
+  crearAutorItem(): FormGroup {
+    return this.formBuilder.group({
+      name: ''
+    })
+  }
+
+  addAutorItem(): void {
+    this.autoresItems = this.formSearch.get('autores') as FormArray;
+    this.autoresItems.push(this.crearAutorItem());
+  }
+
+  deleteAutor(index): void {
+    this.autoresItems = this.formSearch.get('autores') as FormArray;
+    this.autoresItems.removeAt(index);
   }
 
   buscar(selectPais){

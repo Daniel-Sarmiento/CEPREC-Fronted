@@ -2,11 +2,24 @@
     <div class="col-md-3">
       <!--FormSearch-->
       <form [formGroup]="formSearch" (ngSubmit)="buscar(selectPais)">
-        <div class="form-group">
-          <label for="inputAutor">Autor</label>
-          <input type="text" class="form-control" id="inputAutor" placeholder="Escribe un Autor" formControlName="autor">
+        
+        <label>Autor</label>
+        <div formArrayName="autores" class="mb-0 pb-0" 
+             *ngFor="let item of formSearch.get('autores').controls; let i = index; let isFirst = first;">
+          <div [formGroupName]="i" class="form-group input-group">
+            <input type="text" formControlName="name" class="form-control mr-1" placeholder="Autor Principal" *ngIf="isFirst">
+            <input type="text" formControlName="name" class="form-control mr-1" placeholder="Autor Secundario" *ngIf="!isFirst">
+            <span class="input-group-btn" *ngIf="!isFirst">
+              <i class="fas fa-user-times mt-2" (click)="deleteAutor(i)" style="color:red; cursor: pointer;"></i>
+            </span>
+          </div>
         </div>
 
+        <div class="mt-0 mb-2">
+          <i (click)="addAutorItem()" style="color: green; cursor: pointer;" class="fas fa-user-plus"> </i>
+          <span class="ml-1" (click)="addAutorItem()" style="cursor: pointer;" >Añadir autor secundario</span>
+        </div>
+        <hr>
         <div class="form-group">
           <label for="selectPais">País</label>
           <select class="selectpicker form-control" id="selectPais" #selectPais data-style="btn-info" data-live-search="true">
