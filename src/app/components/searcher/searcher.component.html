@@ -1,79 +1,101 @@
 <div class="row">
-    <div class="col-md-3">
-      <!--FormSearch-->
+
+    <div class="col-md-3 filter-block">
       <form [formGroup]="formSearch" (ngSubmit)="buscar(selectPais)">
-        
+
+        <h4 class="text-center tittle">
+          <strong>FILTRO DE BUSQUEDA</strong>
+        </h4>
+
+        <div class="formGroup">
+          <label>Titulo</label>
+          <input type="text" formControlName="titulo" class="form-control mr-1 input" placeholder="Titulo" >
+        </div>
+
         <label>Autor</label>
         <div formArrayName="autores" class="mb-0 pb-0" 
              *ngFor="let item of formSearch.get('autores').controls; let i = index; let isFirst = first;">
           <div [formGroupName]="i" class="form-group input-group">
-            <input type="text" formControlName="name" class="form-control mr-1" placeholder="Autor Principal" *ngIf="isFirst">
-            <input type="text" formControlName="name" class="form-control mr-1" placeholder="Autor Secundario" *ngIf="!isFirst">
+            <input type="text" formControlName="name" class="form-control mr-1 input" placeholder="Autor Principal" *ngIf="isFirst">
+            <input type="text" formControlName="name" class="form-control mr-1 input"  placeholder="Autor Secundario" *ngIf="!isFirst">
             <span class="input-group-btn" *ngIf="!isFirst">
               <i class="fas fa-user-times mt-2" (click)="deleteAutor(i)" style="color:red; cursor: pointer;"></i>
             </span>
           </div>
         </div>
-
         <div class="mt-0 mb-2">
-          <i (click)="addAutorItem()" style="color: green; cursor: pointer;" class="fas fa-user-plus"> </i>
+          <i (click)="addAutorItem()" style="color: black; cursor: pointer;" class="fas fa-user-plus"> </i>
           <span class="ml-1" (click)="addAutorItem()" style="cursor: pointer;" >Añadir autor secundario</span>
         </div>
+
         <hr>
         <div class="form-group">
           <label for="selectPais">País</label>
-          <select class="selectpicker form-control" id="selectPais" #selectPais data-style="btn-info" data-live-search="true">
-          <optgroup label="América del Norte">
-            <option data-tokens="Bermudas">Bermudas</option>
-            <option data-tokens="Canada">Canadá</option>
-            <option data-tokens="Estados Unidos">Estados Unidos</option>
-            <option data-tokens="Groenlandia">Groenlandia</option>
-            <option data-tokens="Mexico">México</option>
-            <option data-tokens="San Pedro y Miquelón">San Pedro y Miquelón</option>
-          </optgroup>
-          <optgroup label="América Central">
-            <option data-tokens="Belice">Belice</option>
-            <option data-tokens="Costa Rica">Costa Rica</option>
-            <option data-tokens="El Salvador">El Salvador</option>
-            <option data-tokens="Guatemala">Guatemala</option>
-            <option data-tokens="Honduras">Honduras</option>
-            <option data-tokens="Nicaragua">Nicaragua</option>
-            <option data-tokens="Panama">Panamá</option>
-          </optgroup>
-          <optgroup label="América del Sur">
-              <option data-tokens="Argentina">Argentina</option>
-              <option data-tokens="Bolivia">Bolivia</option>
-              <option data-tokens="Brasil">Brasil</option>
-              <option data-tokens="Chile">Chile</option>
-              <option data-tokens="Colombia">Colombia</option>
-              <option data-tokens="Ecuador">Ecuador</option>
-              <option data-tokens="Guayana Francesa">Guayana Francesa</option>
-              <option data-tokens="Guyana">Guyana</option>
-              <option data-tokens="Paraguay">Paraguay</option>
-              <option data-tokens="Peru">Perú</option>
-              <option data-tokens="Surinam">Surinam</option>
-              <option data-tokens="Uruguay">Uruguay</option>
-              <option data-tokens="Venezuela">Venezuela</option>
+          <select  class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
+            <optgroup label="América del Norte">
+              <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
+            </optgroup>
+            <optgroup label="América Central">
+              <option *ngFor="let pais of americaCentral" [value]="pais">{{pais}}</option>  
+            </optgroup>
+            <optgroup label="América del Sur">
+              <option *ngFor="let pais of americaDelSur" [value]="pais">{{pais}}</option>
             </optgroup>
           </select>
         </div>
-            
+        
+        <label>Intervalo de fechas</label>
+        <div class="row">
+          <div class="col-md-5">
+            <input type="text" formControlName="fecha1" class="form-control mr-1 input"  maxlength="4" placeholder="" >
+          </div> ---
+          <div class="col-md-5">
+            <input type="text" formControlName="fecha2" class="form-control mr-1 input" maxlength="4"  placeholder="" >
+          </div>
+        </div>
+
+        <div class="formGroup">
+          <label>Institucion</label>
+          <input type="text" formControlName="institucion" class="form-control mr-1 input" placeholder="Institucion" >
+        </div>
+
         <button type="submit" class="btn btn-primary">Buscar</button>
       </form>
-      <!--/FormSearch-->    
     </div>
   
-    <div class="col-md-9"> 
-      <!--cardArticle-->
-      <div class="card border-oval ">
+    <div class="col-md-9 "> 
+      <div class="text-right">
+        <button class="btn btn-primary" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
+      </div><br>
+      <div class="card border-oval" *ngFor="let articulo of collection.articulos | paginate: configuracionPaginacion" style="position: relative;">
         <div class="card-body">
-          <h5 class="card-title text-primary">Titulo del Articulo</h5>
-          <p class="card-subtitle mb-1 text-muted"> <small>Autor1, Autor2 </small></p>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto pariatur sapiente non qui sed omnis animi libero quis! Voluptas, recusandae? Adipisci incidunt aperiam error magni cumque doloribus autem sit alias.</p>
-          <p class="card-text text-muted float-left">12/26/1998</p>
-          <a href="#" class="btn btn-primary border-oval pl-4 pr-4 pt-1 float-right">Más</a>
+          <h5 class="card-title text-primary">{{articulo.titulo}}</h5>
+          <p class="card-subtitle mb-1 text-muted"> <small>{{articulo.autor}} </small></p>
+          <p class="card-text">{{articulo.resumen}}</p>
+          <p class="card-text text-muted float-left">{{articulo.fecha}}</p>
+          <a href="{{articulo.link}}" class="btn btn-primary border-oval pl-4 pr-4 pt-1 float-right">Más</a>
         </div>
       </div>
-      <!--/cardArticle-->
+
+      <div class="text-center"> <br>
+        <!-- <pagination-controls (pageChange)="cambiarPagina($event)"></pagination-controls> -->
+        <pagination-template #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
+          <div class="custom-pagination">
+            <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+              <span *ngIf="!p.isFirstPage()" (click)="p.previous()"> <  </span> 
+            </div> 
+            <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+              <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+              <div *ngIf="p.getCurrent() === page.value">
+                <span>{{ page.label }}</span>
+              </div>
+            </div>
+            <div class="pagination-next" [class.disabled]="p.isLastPage()">
+              <span *ngIf="!p.isLastPage()" (click)="p.next()"> > </span>
+            </div>
+          </div>
+        </pagination-template>
+      </div>
     </div> 
+  
   </div>

@@ -8,6 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearcherComponent } from './components/searcher/searcher.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { AboutComponent } from './components/about/about.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {ExcelService} from 'src/app/service/excel.service';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,10 @@ import { AboutComponent } from './components/about/about.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxPaginationModule
   ],
-  providers: [],
+  providers: [ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
