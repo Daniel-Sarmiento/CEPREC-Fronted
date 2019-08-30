@@ -1,3 +1,57 @@
-<p>
-  stats works!
-</p>
+<div class="row">
+  <div class="col-md-3 filter-block">
+    <h4 class="text-center tittle">
+      <strong>FILTRO DE ESTADISTICAS</strong>
+    </h4>
+    <form [formGroup]="formSearch">
+      <div class="form-group">
+        <label for="selectPais">País</label>
+        <select formControlName="country" class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
+          <optgroup label="América del Norte">
+            <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
+          </optgroup>
+          <optgroup label="América Central">
+            <option *ngFor="let pais of americaCentral" [value]="pais">{{pais}}</option>
+          </optgroup>
+          <optgroup label="América del Sur">
+            <option *ngFor="let pais of americaDelSur" [value]="pais">{{pais}}</option>
+          </optgroup>
+        </select>
+      </div>
+      <label>Intervalo de fechas</label>
+      <div class="row">
+        <div class="col-md-5">
+          <input type="text" formControlName="year_initial" class="form-control mr-1 input" maxlength="4" placeholder="">
+        </div> ---
+        <div class="col-md-5">
+          <input type="text" formControlName="year_final" class="form-control mr-1 input" maxlength="4" placeholder="">
+        </div>
+      </div>
+      <label>Estadisticas por:</label>
+      <button style="margin: 3px" type="submit" class="btn btn-primary" (click)="graficaTipoCancer()">Tipo de
+        cancer</button>
+      <button style="margin: 3px" type="submit" class="btn btn-primary" (click)="graficaTipoPublicaciones()">Tipo de
+        publicación</button>
+    </form>
+
+  </div>
+
+  <!--GRAFICAS-->
+  <div class="col-md-9 ">
+    <div class="row">
+      <label style="margin: 7px;margin-left: 20px">Tipo de grafica: </label>
+      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(1)">Barras</button>
+      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(2)">Pastel</button>
+      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(3)">Puntos</button>
+    </div>
+    <br>
+    <div *ngIf="graficaDisponible" class="chart">
+      <canvas baseChart [data]="graficaChartData" [labels]="graficaChartLabels" [chartType]="graficaChartType"
+        [options]="graficaChartOptions" [legend]="graficaChartLegend">
+      </canvas>
+    </div>
+    <div *ngIf="!graficaDisponible" class="chart">
+      <h1>Esperando consulta...</h1>
+    </div>
+  </div>
+</div>

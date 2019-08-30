@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../service/api.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-stats',
@@ -6,10 +8,105 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stats.component.css']
 })
 export class StatsComponent implements OnInit {
+  americaDelNorte = ['Bermudas', 'Canada', 'Estados Unidos', 'Groenlandia', 'México', 'San Pedro y Miquelón']
+  americaDelSur = ['Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Ecuador', 'Guayana Francesa', 'Guyana', 'Paraguay', 'Perú', 'Surinam', 'Uruguay', 'Venezuela']
+  americaCentral = ['Belice', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Panamá']
 
-  constructor() { }
+  constructor(private api: ApiService, private formBuilder: FormBuilder) {
+    this.formSearch = this.formBuilder.group({
+      country: [''],
+      year_initial: ['0'],
+      year_final: ['0']
+    })
+  }
+  formSearch: FormGroup;
+
+  public graficaChartOptions = {
+    responsive: true,
+    scales: {yAxes: [{ticks: {beginAtZero: true}}]},
+    scaleShowVerticalLines: false
+  };
+  public graficaChartLabels = [];
+  public graficaChartData = [];
+  public graficaChartType = 'bar';
+  public graficaChartLegend = false;
+  graficaDisponible = false;
+  listaDatos: any;
+  listTipoPublicaciones: any;
+  listaTipoCancer: any;
+  data = [];
+  labels = [];
+  verLegend = true;
+  tipoGrafica = "bar";
 
   ngOnInit() {
+    this.graficaChartType = this.tipoGrafica;
+    this.graficaChartLabels = this.labels;
+    this.graficaChartData = this.data;
+    this.graficaChartLegend = this.verLegend;
+  }
+  cambioGrafica(tipoGrafica) {
+    if (tipoGrafica == 1) {
+      this.tipoGrafica = "bar";
+      this.graficaChartOptions = {
+        responsive: true,
+        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+        scaleShowVerticalLines: true
+      };
+      this.verLegend = false;
+    }
+    if (tipoGrafica == 2) {
+      this.tipoGrafica = "pie";
+      this.graficaChartOptions={    responsive: true,
+        scales: {yAxes: []},
+        scaleShowVerticalLines: false};
+      this.verLegend = true;
+    }
+    if (tipoGrafica == 3) {
+      this.tipoGrafica = "line";
+      this.graficaChartOptions = {
+        responsive: true,
+        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+        scaleShowVerticalLines: true
+      };
+      this.verLegend = false;
+    }
+    this.ngOnInit();
   }
 
+  graficaTipoCancer() {
+    var nombres = [];
+    var datos = []
+    this.api.verDatos(this.formSearch.value).subscribe(response => {
+      this.listaDatos = response
+      this.listaTipoCancer = this.listaDatos.tipos_de_cancer
+      for (let i = 0; i < this.listaTipoCancer.length; i++) {
+        nombres.push(this.listaTipoCancer[i].nombre)
+        datos.push(this.listaTipoCancer[i].cantidad)
+      }
+      this.data = datos;
+      this.labels = nombres;
+      this.verLegend = false;
+      this.ngOnInit();
+    });
+    this.graficaDisponible = true;
+  }
+
+  graficaTipoPublicaciones() {
+    var nombres = [];
+    var datos = []
+    this.api.verDatos(this.formSearch.value).subscribe(response => {
+      this.listaDatos = response
+      this.listTipoPublicaciones = this.listaDatos.tipos_de_publicaciones
+      for (let i = 0; i < this.listTipoPublicaciones.length; i++) {
+        nombres.push(this.listTipoPublicaciones[i].nombre)
+        datos.push(this.listTipoPublicaciones[i].cantidad)
+      }
+      this.data = datos;
+      this.labels = nombres;
+      this.verLegend = false;
+      this.ngOnInit();
+    });
+    this.graficaDisponible = true;
+  }
 }

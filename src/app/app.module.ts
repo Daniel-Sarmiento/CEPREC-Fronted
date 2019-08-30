@@ -10,6 +10,8 @@ import { StatsComponent } from './components/stats/stats.component';
 import { AboutComponent } from './components/about/about.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ExcelService} from 'src/app/service/excel.service';
+import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {ExcelService} from 'src/app/service/excel.service';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ChartsModule,
+    HttpClientModule
   ],
   providers: [ExcelService],
   bootstrap: [AppComponent]
