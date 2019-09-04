@@ -16,8 +16,10 @@ export class StatsComponent implements OnInit {
     this.formSearch = this.formBuilder.group({
       country: [''],
       year_initial: ['0'],
-      year_final: ['0']
+      year_final: ['0'],
+      origin:['0']
     })
+    this.obtenerOrigenes()
   }
   formSearch: FormGroup;
 
@@ -26,6 +28,19 @@ export class StatsComponent implements OnInit {
     scales: {yAxes: [{ticks: {beginAtZero: true}}]},
     scaleShowVerticalLines: false
   };
+  public graficaChartColors = [
+    {
+      backgroundColor: [
+        'rgba(255, 99, 132)',
+        'rgba(54, 162, 235)',
+        'rgba(255, 206, 86)',
+        'rgba(75, 192, 192)',
+        'rgba(153, 102, 255)',
+        'rgba(255, 159, 64)'
+      ],
+    },
+  ];
+
   public graficaChartLabels = [];
   public graficaChartData = [];
   public graficaChartType = 'bar';
@@ -34,6 +49,7 @@ export class StatsComponent implements OnInit {
   listaDatos: any;
   listTipoPublicaciones: any;
   listaTipoCancer: any;
+  listaOrigenes:any;
   data = [];
   labels = [];
   verLegend = true;
@@ -44,6 +60,12 @@ export class StatsComponent implements OnInit {
     this.graficaChartLabels = this.labels;
     this.graficaChartData = this.data;
     this.graficaChartLegend = this.verLegend;
+  }
+  obtenerOrigenes(){
+    this.api.verOrigenes().subscribe(response => {
+      console.log(response)
+      this.listaOrigenes=response;
+    });
   }
   cambioGrafica(tipoGrafica) {
     if (tipoGrafica == 1) {
@@ -78,6 +100,7 @@ export class StatsComponent implements OnInit {
     var nombres = [];
     var datos = []
     this.api.verDatos(this.formSearch.value).subscribe(response => {
+      console.log(this.formSearch.value)
       this.listaDatos = response
       this.listaTipoCancer = this.listaDatos.tipos_de_cancer
       for (let i = 0; i < this.listaTipoCancer.length; i++) {

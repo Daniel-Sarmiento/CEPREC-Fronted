@@ -12,5 +12,9 @@ export class ApiService {
   verDatos(params:any) {
     return this.http.post(this.url+'publications/cantidad/',params);
   }
+  //Origenes
+  verOrigenes(){
+    return this.http.get(this.url+"origin/");
+  }
 }
 

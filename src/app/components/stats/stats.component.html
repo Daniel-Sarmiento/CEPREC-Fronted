@@ -6,7 +6,8 @@
     <form [formGroup]="formSearch">
       <div class="form-group">
         <label for="selectPais">País</label>
-        <select formControlName="country" class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
+        <select formControlName="country" class="selectpicker form-control" id="selectPais" #selectPais data-style="btn"
+          data-live-search="true">
           <optgroup label="América del Norte">
             <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
           </optgroup>
@@ -21,12 +22,20 @@
       <label>Intervalo de fechas</label>
       <div class="row">
         <div class="col-md-5">
-          <input type="text" formControlName="year_initial" class="form-control mr-1 input" maxlength="4" placeholder="">
+          <input type="text" formControlName="year_initial" class="form-control mr-1 input" maxlength="4"
+            placeholder="">
         </div> ---
         <div class="col-md-5">
           <input type="text" formControlName="year_final" class="form-control mr-1 input" maxlength="4" placeholder="">
         </div>
       </div>
+      <label>Origen de la publicación</label>
+      <select class="custom-select" formControlName="origin">
+        <option value="0" selected>Todos</option>
+        <option *ngFor="let origen of listaOrigenes" [value]="origen.id">{{origen.name}}</option>
+      </select>
+      <br>
+      <hr>
       <label>Estadisticas por:</label>
       <button style="margin: 3px" type="submit" class="btn btn-primary" (click)="graficaTipoCancer()">Tipo de
         cancer</button>
@@ -47,7 +56,7 @@
     <br>
     <div *ngIf="graficaDisponible" class="chart">
       <canvas baseChart [data]="graficaChartData" [labels]="graficaChartLabels" [chartType]="graficaChartType"
-        [options]="graficaChartOptions" [legend]="graficaChartLegend">
+        [options]="graficaChartOptions" [legend]="graficaChartLegend" [colors]="graficaChartColors">
       </canvas>
     </div>
     <div *ngIf="!graficaDisponible" class="chart">
