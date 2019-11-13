@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  url="http://127.0.0.1:8000/api/v1/";
+  url="https://ceprec-api-publications.herokuapp.com/api/v1/";
   constructor(private http: HttpClient) { }
 
   //Estadisticas
@@ -15,6 +15,13 @@ export class ApiService {
   //Origenes
   verOrigenes(){
     return this.http.get(this.url+"origin/");
+  }
+  //Publicaciones
+  verPublicaciones(){
+    return this.http.get(this.url+"publications/");
+  }
+  buscarPublicaciones(params:any){
+    return this.http.post(this.url+"publications/lista/",params);
   }
 }
 

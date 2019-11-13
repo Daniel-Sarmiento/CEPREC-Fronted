@@ -1,21 +1,21 @@
 <!--.navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <a class="navbar-brand" class="ml-5">
-    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
-  </a>
+<nav style="background-color: #4CB1F7;" class="navbar navbar-expand-lg navbar-dark">
+  <h4 class="navbar-brand" class="ml-5">
+    | Bot/Buscador |
+  </h4>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto mr-5">
-      <li class="nav-item"  routerLinkActive="border-bottom border-5 border-primary active">
-        <a class="nav-link" [routerLink]="['/buscador']">Buscador</a>
+      <li class="nav-item"  routerLinkActive="border-bottom border-5 border-dark active">
+        <a class="nav-link active" [routerLink]="['/buscador']">Buscador</a>
       </li>
-      <li class="nav-item" routerLinkActive="border-bottom border-5 border-primary active">
-        <a class="nav-link" [routerLink]="['/estadisticas']">Estadísticas</a>
+      <li class="nav-item" routerLinkActive="border-bottom border-5 border-dark active">
+        <a class="nav-link active" [routerLink]="['/estadisticas']">Estadísticas</a>
       </li>
-      <li class="nav-item" routerLinkActive="border-bottom border-5 border-primary active">
-        <a class="nav-link" [routerLink]="['/acerca-de']">Acerca de</a>
+      <li class="nav-item" routerLinkActive="border-bottom border-5 border-dark active">
+        <a class="nav-link active" [routerLink]="['/acerca-de']">Acerca de</a>
       </li>
     </ul>
   </div>

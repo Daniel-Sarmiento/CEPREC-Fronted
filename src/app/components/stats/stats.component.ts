@@ -95,12 +95,16 @@ export class StatsComponent implements OnInit {
     }
     this.ngOnInit();
   }
-
-  graficaTipoCancer() {
+  graficaTipoCancer(selectPais) {
     var nombres = [];
     var datos = []
-    this.api.verDatos(this.formSearch.value).subscribe(response => {
-      console.log(this.formSearch.value)
+    if(selectPais.value=="Todos"){
+      this.formSearch.get('country').setValue("")
+    }else{
+      this.formSearch.get('country').setValue(selectPais.value)
+    }
+    console.log(this.formSearch.value)
+    this.api.verDatos(this.formSearch.value).subscribe(response => { 
       this.listaDatos = response
       this.listaTipoCancer = this.listaDatos.tipos_de_cancer
       for (let i = 0; i < this.listaTipoCancer.length; i++) {
@@ -115,9 +119,15 @@ export class StatsComponent implements OnInit {
     this.graficaDisponible = true;
   }
 
-  graficaTipoPublicaciones() {
+  graficaTipoPublicaciones(selectPais) {
     var nombres = [];
     var datos = []
+    if(selectPais.value=="Todos"){
+      this.formSearch.get('country').setValue("")
+    }else{
+      this.formSearch.get('country').setValue(selectPais.value)
+    }
+    console.log(this.formSearch.value)
     this.api.verDatos(this.formSearch.value).subscribe(response => {
       this.listaDatos = response
       this.listTipoPublicaciones = this.listaDatos.tipos_de_publicaciones
