@@ -89,4 +89,5 @@ export class SearcherComponent implements OnInit{
   cambiarPagina(event){
     this.configuracionPaginacion.currentPage = event;
   }
+  formData(){ return this.formSearch.get('users') }
 }
