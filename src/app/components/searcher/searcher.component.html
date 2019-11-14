@@ -12,7 +12,7 @@
         <div class="form-group">
           <label>Autor</label>
           <div formArrayName="users" class="mb-0 pb-0" 
-              *ngFor="let item of formData.controls; let i = index; let isFirst = first;">
+              *ngFor="let item of formSearch.get('users')['controls']; let i = index; let isFirst = first;">
             <div [formGroupName]="i" class="form-group input-group">
               <input type="text" formControlName="name" class="form-control mr-1 input" *ngIf="isFirst">
               <input type="text" formControlName="name" class="form-control mr-1 input" *ngIf="!isFirst">
