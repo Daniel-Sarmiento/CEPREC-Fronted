@@ -65,7 +65,7 @@
   
     <div class="col-md-9 "> 
       <div class="text-right">
-        <button class="btn btn-primary" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
+        <button class="btn btn-warning" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
       </div>
       <div class="card border-oval" *ngFor="let articulo of collection.articulos | paginate: configuracionPaginacion" style="position: relative; margin: 5px;">
         <div class="card-body">
