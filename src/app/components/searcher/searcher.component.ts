@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {ExcelService} from 'src/app/service/excel.service';
+import { ApiService } from '../../service/api.service';
 
 declare var $:any;
 
@@ -9,54 +10,47 @@ declare var $:any;
   templateUrl: './searcher.component.html',
   styleUrls: ['./searcher.component.css']
 })
-export class SearcherComponent implements AfterViewInit  {
+export class SearcherComponent implements OnInit{
   americaDelNorte = ['Bermudas','Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
   americaDelSur = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','Guayana Francesa','Guyana','Paraguay','Perú','Surinam','Uruguay','Venezuela']
   americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
-  collection = { count: 1000, articulos: [] };
+  listPublicaciones:any
   formSearch:FormGroup;
   autoresItems:FormArray; 
   configuracionPaginacion: any
 
-  constructor(
-    private formBuilder:FormBuilder,
-    private excelService:ExcelService
-    ) {  
+  constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
-
-    for (var i = 0; i < this.collection.count; i++) {
-      this.collection.articulos.push(
-        {
-          id: i + 1,
-          titulo: "Titulo del articulo  "+ (i+1),
-          autor: "Autor1, author2",
-          resumen: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto pariatur sapiente non qui sed omnis animi libero quis! Voluptas, recusandae? Adipisci incidunt aperiam error magni cumque doloribus autem sit alias.",
-          fecha: "12/26/1998",
-          link: "https://www.cancer.gov/espanol/cancer/naturaleza/que-es"
-        }
-      );
+    this.configuracionPaginacion = {
+      id: 'custom'
     }
+  }
 
+  ngOnInit(){
+    this.obtenerPublicaciones()
+  } 
+  paginacion(len){
     this.configuracionPaginacion = {
       id: 'custom',
       itemsPerPage:10,
       currentPage: 1,
-      totalItems: this.collection.count
-    };
+      totalItems: len
+    }
   }
-
-  ngAfterViewInit() {
-    $('select').selectpicker();
-  } 
-
+  obtenerPublicaciones(){
+    this.api.verPublicaciones().subscribe(response => {
+      this.listPublicaciones=response
+      this.paginacion(this.listPublicaciones.length)
+    });
+  }
   inicializarFormulario(){
     this.formSearch = this.formBuilder.group({
-      titulo: [''],
-      autores: this.formBuilder.array([this.crearAutorItem()]),
-      pais: [''],
-      fecha1: [''],
-      fecha2: [''],
-      institucion: ['']
+      tittle_publication: [''],
+      users: this.formBuilder.array([this.crearAutorItem()]),
+      country: [''],
+      year_initial: [0],
+      year_final: [0],
+      name_institution: ['']
     })
   }
 
@@ -67,24 +61,33 @@ export class SearcherComponent implements AfterViewInit  {
   }
 
   addAutorItem(): void {
-    this.autoresItems = this.formSearch.get('autores') as FormArray;
+    this.autoresItems = this.formSearch.get('users') as FormArray;
     this.autoresItems.push(this.crearAutorItem());
   }
 
   deleteAutor(index): void {
-    this.autoresItems = this.formSearch.get('autores') as FormArray;
+    this.autoresItems = this.formSearch.get('users') as FormArray;
     this.autoresItems.removeAt(index);
   }
 
+  exportarAexcel(){
+   this.excelService.exportAsExcelFile(this.listPublicaciones, 'busquedaDeCancer');
+  } 
+
   buscar(selectPais){
-    this.formSearch.get('pais').setValue(selectPais.value)
-    console.log(this.formSearch.value)
+    if(selectPais.value=="Todos"){
+      this.formSearch.get('country').setValue("")
+    }else{
+      this.formSearch.get('country').setValue(selectPais.value)
+    }
+    this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
+      this.listPublicaciones=response
+      this.paginacion(this.listPublicaciones.length)
+    });
   }
 
   cambiarPagina(event){
     this.configuracionPaginacion.currentPage = event;
   }
-  exportarAexcel(){
-   this.excelService.exportAsExcelFile(this.collection.articulos, 'busquedaDeCancer');
-  } 
+  get formData(){ return this.formSearch.get('users') }
 }

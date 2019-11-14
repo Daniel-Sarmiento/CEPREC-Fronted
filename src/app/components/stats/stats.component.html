@@ -1,10 +1,25 @@
 <div class="row">
   <div class="col-md-3 filter-block">
-    <h4 class="text-center tittle">
+    <h5 class="text-light text-center tittle">
       <strong>FILTRO DE ESTADISTICAS</strong>
-    </h4>
+    </h5>
+    <div class="form-group">
+      <label for="selectPais">País</label>
+      <select  class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
+        <option [value]="">Todos</option>
+        <optgroup label="América del Norte">
+          <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
+        </optgroup>
+        <optgroup label="América Central">
+          <option *ngFor="let pais of americaCentral" [value]="pais">{{pais}}</option>  
+        </optgroup>
+        <optgroup label="América del Sur">
+          <option *ngFor="let pais of americaDelSur" [value]="pais">{{pais}}</option>
+        </optgroup>
+      </select>
+    </div>
     <form [formGroup]="formSearch">
-      <div class="form-group">
+      <div *ngIf="false" class="form-group">
         <label for="selectPais">País</label>
         <select formControlName="country" class="selectpicker form-control" id="selectPais" #selectPais data-style="btn"
           data-live-search="true">
@@ -21,11 +36,11 @@
       </div>
       <label>Intervalo de fechas</label>
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
           <input type="text" formControlName="year_initial" class="form-control mr-1 input" maxlength="4"
             placeholder="">
-        </div> ---
-        <div class="col-md-5">
+        </div>
+        <div class="col-md-6">
           <input type="text" formControlName="year_final" class="form-control mr-1 input" maxlength="4" placeholder="">
         </div>
       </div>
@@ -37,21 +52,20 @@
       <br>
       <hr>
       <label>Estadisticas por:</label>
-      <button style="margin: 3px" type="submit" class="btn btn-primary" (click)="graficaTipoCancer()">Tipo de
+      <button style="margin-bottom:15px;" type="submit" class="btn btn-warning btn-lg btn-block" (click)="graficaTipoCancer(selectPais)">Tipo de
         cancer</button>
-      <button style="margin: 3px" type="submit" class="btn btn-primary" (click)="graficaTipoPublicaciones()">Tipo de
+      <button style="margin-bottom:15px;" type="submit" class="btn btn-warning btn-lg btn-block" (click)="graficaTipoPublicaciones(selectPais)">Tipo de
         publicación</button>
     </form>
-
   </div>
 
   <!--GRAFICAS-->
   <div class="col-md-9 ">
     <div class="row">
-      <label style="margin: 7px;margin-left: 20px">Tipo de grafica: </label>
-      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(1)">Barras</button>
-      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(2)">Pastel</button>
-      <button style="margin-right: 6px" class="btn btn-primary" (click)="cambioGrafica(3)">Puntos</button>
+      <label style="margin: 7px;margin-left: 20px"><strong> Tipo de grafica:</strong></label>
+      <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(1)">Barras</button>
+      <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(2)">Pastel</button>
+      <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(3)">Puntos</button>
     </div>
     <br>
     <div *ngIf="graficaDisponible" class="chart">

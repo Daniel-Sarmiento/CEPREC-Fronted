@@ -4,12 +4,10 @@
 
 /*  */
 .filter-block{
-    border-radius: 10px;
     text-align: center;
     color: #FFFFFF;
     font-size: 20px;
-    background-color: #3e64ff;
-    padding: 10px;
+    background-color: #4CB1F7;
     height: 80%; /* hacemos que la cabecera ocupe el ancho completo de la página */
 }
 

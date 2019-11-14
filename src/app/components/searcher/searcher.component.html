@@ -1,37 +1,38 @@
 <div class="row">
-
     <div class="col-md-3 filter-block">
       <form [formGroup]="formSearch" (ngSubmit)="buscar(selectPais)">
-
-        <h4 class="text-center tittle">
+        <h5 class="text-light text-center tittle">
           <strong>FILTRO DE BUSQUEDA</strong>
-        </h4>
-
+        </h5>
         <div class="formGroup">
           <label>Titulo</label>
-          <input type="text" formControlName="titulo" class="form-control mr-1 input" placeholder="Titulo" >
+          <input type="text" formControlName="tittle_publication" class="form-control mr-1 input">
         </div>
 
-        <label>Autor</label>
-        <div formArrayName="autores" class="mb-0 pb-0" 
-             *ngFor="let item of formSearch.get('autores').controls; let i = index; let isFirst = first;">
-          <div [formGroupName]="i" class="form-group input-group">
-            <input type="text" formControlName="name" class="form-control mr-1 input" placeholder="Autor Principal" *ngIf="isFirst">
-            <input type="text" formControlName="name" class="form-control mr-1 input"  placeholder="Autor Secundario" *ngIf="!isFirst">
-            <span class="input-group-btn" *ngIf="!isFirst">
-              <i class="fas fa-user-times mt-2" (click)="deleteAutor(i)" style="color:red; cursor: pointer;"></i>
-            </span>
-          </div>
+        <div class="form-group">
+          <label>Autor</label>
+          <div formArrayName="users" class="mb-0 pb-0" 
+              *ngFor="let item of formData.controls; let i = index; let isFirst = first;">
+            <div [formGroupName]="i" class="form-group input-group">
+              <input type="text" formControlName="name" class="form-control mr-1 input" *ngIf="isFirst">
+              <input type="text" formControlName="name" class="form-control mr-1 input" *ngIf="!isFirst">
+              <span class="input-group-btn" *ngIf="!isFirst">
+                 <i class="fas fa-user-times mt-2" (click)="deleteAutor(i)" style="color:red; cursor: pointer;"></i>
+              </span>
+            </div>
+          </div>  
         </div>
+
         <div class="mt-0 mb-2">
           <i (click)="addAutorItem()" style="color: black; cursor: pointer;" class="fas fa-user-plus"> </i>
-          <span class="ml-1" (click)="addAutorItem()" style="cursor: pointer;" >Añadir autor secundario</span>
+          <span class="ml-1" (click)="addAutorItem()" style="cursor: pointer;" > Agregar otro autor</span>
         </div>
 
         <hr>
         <div class="form-group">
           <label for="selectPais">País</label>
           <select  class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
+            <option [value]="">Todos</option>
             <optgroup label="América del Norte">
               <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
             </optgroup>
@@ -44,41 +45,42 @@
           </select>
         </div>
         
-        <label>Intervalo de fechas</label>
-        <div class="row">
-          <div class="col-md-5">
-            <input type="text" formControlName="fecha1" class="form-control mr-1 input"  maxlength="4" placeholder="" >
-          </div> ---
-          <div class="col-md-5">
-            <input type="text" formControlName="fecha2" class="form-control mr-1 input" maxlength="4"  placeholder="" >
+        <div class="form-group">
+          <label>Intervalo de fechas</label>
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
+            </div>
           </div>
         </div>
 
         <div class="formGroup">
           <label>Institucion</label>
-          <input type="text" formControlName="institucion" class="form-control mr-1 input" placeholder="Institucion" >
+          <input type="text" formControlName="name_institution" class="form-control mr-1 input">
         </div>
 
-        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button type="submit" class="btn btn-warning btn-lg btn-block">Buscar</button>
       </form>
+      <br>
     </div>
-  
     <div class="col-md-9 "> 
       <div class="text-right">
-        <button class="btn btn-warning" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
+        <button class="btn btn-light" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
       </div>
-      <div class="card border-oval" *ngFor="let articulo of collection.articulos | paginate: configuracionPaginacion" style="position: relative; margin: 5px;">
+      <div class="card border-oval" *ngFor="let articulo of listPublicaciones | paginate: configuracionPaginacion" style="position: relative; margin: 5px;">
         <div class="card-body">
-          <h5 class="card-title text-primary">{{articulo.titulo}}</h5>
-          <p class="card-subtitle mb-1 text-muted"> <small>{{articulo.autor}} </small></p>
-          <p class="card-text">{{articulo.resumen}}</p>
-          <p class="card-text text-muted float-left">{{articulo.fecha}}</p>
-          <a href="{{articulo.link}}" class="btn btn-primary border-oval pl-4 pr-4 pt-1 float-right">Más</a>
+          <h5 class="card-title text-primary">{{articulo.tittle}}</h5>
+          <p class="card-subtitle mb-1 text-muted"> <small *ngFor="let autor of articulo.authors">{{autor.name}} {{autor.last_name}}</small></p>
+          <p class="card-text">{{articulo.abstract}}</p>
+          <p class="card-text text-muted float-left">{{articulo.publication_year}}</p>
+          <a href="{{articulo.url}}" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light">Más</a>
         </div>
       </div>
 
       <div class="text-center"> <br>
-        <!-- <pagination-controls (pageChange)="cambiarPagina($event)"></pagination-controls> -->
         <pagination-template #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
           <div class="custom-pagination">
             <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
@@ -97,5 +99,4 @@
         </pagination-template>
       </div>
     </div> 
-  
-  </div>
+</div>
