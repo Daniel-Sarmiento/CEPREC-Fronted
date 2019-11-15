@@ -73,10 +73,10 @@
       <div class="card border-oval" *ngFor="let articulo of listPublicaciones | paginate: configuracionPaginacion" style="position: relative; margin: 5px;">
         <div class="card-body">
           <h5 class="card-title text-primary">{{articulo.tittle}}</h5>
-          <p class="card-subtitle mb-1 text-muted"> <small *ngFor="let autor of articulo.authors">{{autor.name}} {{autor.last_name}}</small></p>
-          <p class="card-text">{{articulo.abstract}}</p>
+          <p class="card-subtitle mb-1 text-muted"> <small *ngFor="let autor of articulo.authors"> -{{autor.name}} {{autor.last_name}}</small></p>
+          <p class="card-text">{{articulo.abstract | slice:0:500}}...</p>
           <p class="card-text text-muted float-left">{{articulo.publication_year}}</p>
-          <a href="{{articulo.url}}" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light">Más</a>
+          <a target="_blank" href="{{articulo.url}}" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light">Más</a>
         </div>
       </div>
 
