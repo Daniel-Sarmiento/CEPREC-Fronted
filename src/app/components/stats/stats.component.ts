@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+declare var $:any;
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.css']
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, AfterViewInit {
   americaDelNorte = ['Bermudas', 'Canada', 'Estados Unidos', 'Groenlandia', 'México', 'San Pedro y Miquelón']
   americaDelSur = ['Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Ecuador', 'Guayana Francesa', 'Guyana', 'Paraguay', 'Perú', 'Surinam', 'Uruguay', 'Venezuela']
   americaCentral = ['Belice', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Panamá']
@@ -61,6 +63,11 @@ export class StatsComponent implements OnInit {
     this.graficaChartData = this.data;
     this.graficaChartLegend = this.verLegend;
   }
+
+  ngAfterViewInit(){
+    $('#selectPais').selectpicker();
+  }
+
   obtenerOrigenes(){
     this.api.verOrigenes().subscribe(response => {
       console.log(response)

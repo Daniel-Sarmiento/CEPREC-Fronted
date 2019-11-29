@@ -19,21 +19,6 @@
       </select>
     </div>
     <form [formGroup]="formSearch">
-      <div *ngIf="false" class="form-group">
-        <label for="selectPais">País</label>
-        <select formControlName="country" class="selectpicker form-control" id="selectPais" #selectPais data-style="btn"
-          data-live-search="true">
-          <optgroup label="América del Norte">
-            <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
-          </optgroup>
-          <optgroup label="América Central">
-            <option *ngFor="let pais of americaCentral" [value]="pais">{{pais}}</option>
-          </optgroup>
-          <optgroup label="América del Sur">
-            <option *ngFor="let pais of americaDelSur" [value]="pais">{{pais}}</option>
-          </optgroup>
-        </select>
-      </div>
       <label>Intervalo de fechas</label>
       <div class="row">
         <div class="col-md-6">

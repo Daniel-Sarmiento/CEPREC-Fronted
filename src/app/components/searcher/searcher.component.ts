@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {ExcelService} from 'src/app/service/excel.service';
 import { ApiService } from '../../service/api.service';
@@ -10,7 +10,7 @@ declare var $:any;
   templateUrl: './searcher.component.html',
   styleUrls: ['./searcher.component.css']
 })
-export class SearcherComponent implements OnInit{
+export class SearcherComponent implements OnInit, AfterViewInit{
   americaDelNorte = ['Bermudas','Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
   americaDelSur = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','Guayana Francesa','Guyana','Paraguay','Perú','Surinam','Uruguay','Venezuela']
   americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
@@ -29,6 +29,11 @@ export class SearcherComponent implements OnInit{
   ngOnInit(){
     this.obtenerPublicaciones()
   } 
+
+  ngAfterViewInit(){
+    $('select').selectpicker();
+  }
+
   paginacion(len){
     this.configuracionPaginacion = {
       id: 'custom',
@@ -43,6 +48,7 @@ export class SearcherComponent implements OnInit{
       this.paginacion(this.listPublicaciones.length)
     });
   }
+  
   inicializarFormulario(){
     this.formSearch = this.formBuilder.group({
       tittle_publication: [''],
