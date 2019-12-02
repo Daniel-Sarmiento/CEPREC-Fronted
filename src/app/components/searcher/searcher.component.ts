@@ -18,6 +18,9 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   formSearch:FormGroup;
   autoresItems:FormArray; 
   configuracionPaginacion: any
+  datosDisponibles=false
+  sinResultado=false
+  validarExportacion=true
 
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
@@ -43,9 +46,17 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }
   }
   obtenerPublicaciones(){
+    this.sinResultado=false
+    this.validarExportacion=true
+    this.datosDisponibles=false
     this.api.verPublicaciones().subscribe(response => {
       this.listPublicaciones=response
+      console.log(response)
       this.paginacion(this.listPublicaciones.length)
+      this.datosDisponibles=true
+      if (this.listPublicaciones.length==0){
+        this.sinResultado=true
+      }
     });
   }
   
@@ -77,10 +88,18 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   }
 
   exportarAexcel(){
-   this.excelService.exportAsExcelFile(this.listPublicaciones, 'busquedaDeCancer');
+    if(this.sinResultado){
+      this.validarExportacion=false
+    }else{
+      this.excelService.exportAsExcelFile(this.listPublicaciones, 'busquedaDeCancer');
+    }
+    
   } 
 
   buscar(selectPais){
+    this.validarExportacion=true
+    this.sinResultado=false
+    this.datosDisponibles=false
     if(selectPais.value=="Todos"){
       this.formSearch.get('country').setValue("")
     }else{
@@ -89,6 +108,10 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response
       this.paginacion(this.listPublicaciones.length)
+      if (this.listPublicaciones.length==0){
+        this.sinResultado=true
+      }
+      this.datosDisponibles=true
     });
   }
 

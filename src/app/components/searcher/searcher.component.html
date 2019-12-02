@@ -4,6 +4,8 @@
         <h5 class="text-light text-center tittle">
           <strong>FILTRO DE BUSQUEDA</strong>
         </h5>
+        <button style="color:red;margin: 0px; padding: 0px;position: relative;" type="button" class="text-left btn btn-link" (click)="inicializarFormulario()">Limpiar filtro</button>
+        <hr>
         <div class="formGroup">
           <label>Titulo</label>
           <input type="text" formControlName="tittle_publication" class="form-control mr-1 input">
@@ -46,7 +48,7 @@
         </div>
         
         <div class="form-group">
-          <label>Intervalo de fechas</label>
+          <label>Intervalo por año</label>
           <div class="row">
             <div class="col-md-6">
               <input type="text" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
@@ -68,23 +70,25 @@
     </div>
     <div class="col-md-9 "> 
       <div class="text-right">
+        <span style="color:red" *ngIf="!validarExportacion">No existen resultados para ser exportados. </span>
         <button class="btn btn-light" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
       </div>
       <div class="card border-oval" *ngFor="let articulo of listPublicaciones | paginate: configuracionPaginacion" style="position: relative; margin: 5px;">
         <div class="card-body">
           <h5 class="card-title text-primary">{{articulo.tittle}}</h5>
-          <p class="card-subtitle mb-1 text-muted"> <small *ngFor="let autor of articulo.authors"> -{{autor.name}} {{autor.last_name}}</small></p>
+          <p class="card-subtitle mb-1 text-muted"> <small *ngFor="let autor of articulo.authors;let i = index"> -{{autor.name}} {{autor.last_name}} ({{articulo.affiliations[i].name}}, {{articulo.affiliations[i].name_country}})</small></p>
           <p class="card-text">{{articulo.abstract | slice:0:500}}...</p>
           <p class="card-text text-muted float-left">{{articulo.publication_year}}</p>
           <a target="_blank" href="{{articulo.url}}" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light">Más</a>
         </div>
       </div>
+      
 
       <div class="text-center"> <br>
         <pagination-template #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
-          <div class="custom-pagination">
+          <div *ngIf="datosDisponibles" class="custom-pagination">
             <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
-              <span *ngIf="!p.isFirstPage()" (click)="p.previous()"> <  </span> 
+              <span *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </span> 
             </div> 
             <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
               <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
@@ -97,6 +101,10 @@
             </div>
           </div>
         </pagination-template>
+      </div>
+      <div class="mensajes">
+        <h2 *ngIf="!datosDisponibles">Esperando datos...</h2>
+        <h2 *ngIf="sinResultado">Sin resultados, intenté con otras opciones en el filtro.</h2>
       </div>
     </div> 
 </div>
