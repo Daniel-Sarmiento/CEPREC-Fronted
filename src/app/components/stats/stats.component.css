@@ -7,8 +7,13 @@
     text-align: center;
     color: #FFFFFF;
     font-size: 20px;
-    background-color: #4CB1F7;
-    height: 80%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+    background-color: #02829B;
+    max-height: 810px; /* hacemos que la cabecera ocupe el ancho completo de la página */
+    padding: 5px;
+    max-width: 350px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 6px 6px 6px black;
 }
 
 /* margen en la parte inferior de los titulos*/
@@ -81,4 +86,11 @@
 .pagination-previous,.pagination-next{
     display: inline-block;
     font-weight: bold;
+}
+
+.graficas {
+    margin: auto;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 6px 6px 6px black;
 }
