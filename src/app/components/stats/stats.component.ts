@@ -38,7 +38,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
         'rgba(255, 206, 86)',
         'rgba(75, 192, 192)',
         'rgba(153, 102, 255)',
-        'rgba(255, 159, 64)'
+        'rgba(255, 159, 64)',   
+        'rgba(83, 219, 158)',
+        'rgba(195, 66, 174)',
+        'rgba(195, 66, 80)',
+        'rgba(234, 129, 196)',
+        'rgba(54, 196, 97)',
       ],
     },
   ];
@@ -70,7 +75,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
   obtenerOrigenes(){
     this.api.verOrigenes().subscribe(response => {
-      console.log(response)
       this.listaOrigenes=response;
     });
   }
@@ -110,14 +114,15 @@ export class StatsComponent implements OnInit, AfterViewInit {
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
     }
-    console.log(this.formSearch.value)
     this.api.verDatos(this.formSearch.value).subscribe(response => { 
       this.listaDatos = response
       this.listaTipoCancer = this.listaDatos.tipos_de_cancer
+      console.log(response)
       for (let i = 0; i < this.listaTipoCancer.length; i++) {
         nombres.push(this.listaTipoCancer[i].nombre)
         datos.push(this.listaTipoCancer[i].cantidad)
       }
+      console.log(datos)
       this.data = datos;
       this.labels = nombres;
       this.verLegend = false;

@@ -21,7 +21,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   datosDisponibles=false
   sinResultado=false
   validarExportacion=true
-
+  cantidad=0
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
     this.configuracionPaginacion = {
@@ -51,9 +51,9 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     this.datosDisponibles=false
     this.api.verPublicaciones().subscribe(response => {
       this.listPublicaciones=response
-      console.log(response)
       this.paginacion(this.listPublicaciones.length)
       this.datosDisponibles=true
+      this.cantidad=this.listPublicaciones.length
       if (this.listPublicaciones.length==0){
         this.sinResultado=true
       }
@@ -104,6 +104,10 @@ export class SearcherComponent implements OnInit, AfterViewInit{
       this.formSearch.get('country').setValue("")
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
+    }
+    console.log(this.formSearch.value('year_initial'))
+    if(this.formSearch.value('year_initial') == "0"){
+      console.log("Alguno de los años es vacio")
     }
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response

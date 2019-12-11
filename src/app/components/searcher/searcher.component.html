@@ -54,10 +54,10 @@
               <label>Intervalo por año</label>
               <div class="row">
                 <div class="col-md-6">
-                  <input type="text" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
+                  <input type="number" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
                 </div>
                 <div class="col-md-6">
-                  <input type="text" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
+                  <input type="number" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
                 </div>
               </div>
             </div>
@@ -77,6 +77,7 @@
       <div class="col-md-9 ">
         <br>
         <div class="result" style="background-color: #FFFFFF;">
+            Resultados: {{cantidad}} publicaciones
             <div class="text-right">
               <span style="color:red" *ngIf="!validarExportacion">No existen resultados para ser exportados. </span>
               <button class="btn btn-light" (click)="exportarAexcel()"><i class="fas fa-file-excel" style="color:green; cursor: pointer;"></i> Exportar resultados</button>
