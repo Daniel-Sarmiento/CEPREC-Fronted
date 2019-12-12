@@ -93,7 +93,6 @@
               </div>
             </div>
             
-
             <div class="text-center"> <br>
               <pagination-template #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
                 <div *ngIf="datosDisponibles" class="custom-pagination">
@@ -113,8 +112,13 @@
               </pagination-template>
             </div><br>
 
-            <div class="mensajes">
-              <h2 *ngIf="!datosDisponibles" style="text-align: center;">Esperando datos...</h2>
+            <div class="mensajes" style="margin-bottom: 55px">
+              <!-- <h2 *ngIf="!datosDisponibles" style="text-align: center;">Esperando datos...</h2> -->
+              <div class="container text-center" *ngIf="!datosDisponibles">
+                <div class="col">
+                  <i class="fa fa-sync fa-spin fa-5x text-dark"></i>
+                </div>
+              </div>
               <h2 *ngIf="sinResultado">Sin resultados, intenté con otras opciones en el filtro.</h2>
             </div>
 

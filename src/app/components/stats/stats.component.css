@@ -13,7 +13,7 @@
     max-width: 350px;
     margin: auto;
     border-radius: 10px;
-    box-shadow: 6px 6px 6px black;
+    /* box-shadow: 6px 6px 6px black; */
 }
 
 /* margen en la parte inferior de los titulos*/
@@ -92,5 +92,5 @@
     margin: auto;
     padding: 5px;
     border-radius: 10px;
-    box-shadow: 6px 6px 6px black;
+    /* box-shadow: 6px 6px 6px black; */
 }

@@ -17,11 +17,13 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   listPublicaciones:any
   formSearch:FormGroup;
   autoresItems:FormArray; 
-  configuracionPaginacion: any
-  datosDisponibles=false
-  sinResultado=false
-  validarExportacion=true
-  cantidad=0
+  configuracionPaginacion:any;
+  datosDisponibles = false;
+  sinResultado = false;
+  validarExportacion = true;
+  cantidad = 0;
+  loading = true;
+
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
     this.configuracionPaginacion = {
@@ -46,17 +48,19 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }
   }
   obtenerPublicaciones(){
-    this.sinResultado=false
-    this.validarExportacion=true
-    this.datosDisponibles=false
+    this.sinResultado = false
+    this.validarExportacion = true
+    this.datosDisponibles = false
     this.api.verPublicaciones().subscribe(response => {
       this.listPublicaciones=response
       this.paginacion(this.listPublicaciones.length)
-      this.datosDisponibles=true
+      this.datosDisponibles = true
       this.cantidad=this.listPublicaciones.length
-      if (this.listPublicaciones.length==0){
-        this.sinResultado=true
+
+      if (this.listPublicaciones.length == 0){
+        this.sinResultado = true
       }
+
     });
   }
   
@@ -105,8 +109,8 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
     }
-    console.log(this.formSearch.value('year_initial'))
-    if(this.formSearch.value('year_initial') == "0"){
+    console.log(this.formSearch.get('year_initial').value)
+    if(this.formSearch.get('year_initial').value == "0"){
       console.log("Alguno de los años es vacio")
     }
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
