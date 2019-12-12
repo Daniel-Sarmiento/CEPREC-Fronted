@@ -159,5 +159,5 @@ export class StatsComponent implements OnInit, AfterViewInit {
     var anchor = event.target;
     anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
     anchor.download = "grafica.png";
-}
+  }
 }
