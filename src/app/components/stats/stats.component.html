@@ -53,19 +53,22 @@
       <br>
       <div class="graficas" style="background-color: #FFFFFF;">
         <div class="row">
-          <label style="margin: 7px;margin-left: 20px"><strong> Tipo de grafica:</strong></label>
+          <label style="margin: 7px;margin-left: 20px"><strong> Tipo de gráfica:</strong></label>
           <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(1)">Barras</button>
           <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(2)">Pastel</button>
           <button style="margin-right: 6px" class="btn btn-info border-oval pl-4 pr-4 pt-1 float-right text-light" (click)="cambioGrafica(3)">Puntos</button>
         </div>
         <br>
         <div *ngIf="graficaDisponible" class="chart">
-          <canvas baseChart [data]="graficaChartData" [labels]="graficaChartLabels" [chartType]="graficaChartType"
+          <canvas id="myChart" baseChart [data]="graficaChartData" [labels]="graficaChartLabels" [chartType]="graficaChartType"
             [options]="graficaChartOptions" [legend]="graficaChartLegend" [colors]="graficaChartColors">
           </canvas>
         </div>
         <div  *ngIf="!graficaDisponible" class="chart">
           <h2 class="text-center">Utilicé el filtro para hacer una consulta.</h2>
+        </div>
+        <div>
+          <a href="#" class="btn btn-success text-light" *ngIf="graficaDisponible" (click)="downloadCanvas($event)"><i class="fas fa-download"></i> Descargar esta gráfica</a>
         </div>
       </div>
     </div>
