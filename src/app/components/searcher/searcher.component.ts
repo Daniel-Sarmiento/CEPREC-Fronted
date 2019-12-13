@@ -27,12 +27,13 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   formSearch:FormGroup;
   autoresItems:FormArray; 
   configuracionPaginacion:any;
-  datosDisponibles = false;
+  datosDisponibles = true;
   sinResultado = false;
   validarExportacion = true;
   cantidad = 0;
   loading = true;
   error = false;
+  textEmpezar=true
 
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
@@ -42,7 +43,6 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(){
-    this.obtenerPublicaciones()
   } 
 
   ngAfterViewInit(){
@@ -56,24 +56,6 @@ export class SearcherComponent implements OnInit, AfterViewInit{
       currentPage: 1,
       totalItems: len
     }
-  }
-  obtenerPublicaciones(){
-    this.sinResultado = false
-    this.validarExportacion = true
-    this.datosDisponibles = false
-    this.error = false
-
-    this.api.verPublicaciones().subscribe(response => {
-      this.listPublicaciones=response
-      this.paginacion(this.listPublicaciones.length)
-      this.datosDisponibles = true
-      this.cantidad=this.listPublicaciones.length
-
-      if (this.listPublicaciones.length == 0){
-        this.sinResultado = true
-      }
-
-    }, error => {this.error = true});
   }
   
   inicializarFormulario(){
@@ -113,6 +95,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   } 
 
   buscar(selectPais){
+    this.textEmpezar=false
     window.scrollTo(0, 0);
     this.listPublicaciones = []
     this.sinResultado = false

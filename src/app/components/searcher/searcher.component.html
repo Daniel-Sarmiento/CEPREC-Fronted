@@ -104,7 +104,7 @@
             </div>
             
             <div class="text-center"> <br>
-              <pagination-template #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
+              <pagination-template *ngIf="!textEmpezar" #p="paginationApi" [id]="configuracionPaginacion.id" (pageChange)="cambiarPagina($event)">
                 <div *ngIf="datosDisponibles" class="custom-pagination">
                   <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
                     <span *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </span> 
@@ -133,6 +133,12 @@
                   <div class="col text-center">
                     <i class="fa fa-search fa-5x text-secondary"></i>
                     <p class="mt-3 font-weight-bold ml-4 text-uppercase text-lg">Sin resultados</p>
+                  </div>
+              </div>
+              <div class="container text-center" *ngIf="textEmpezar">
+                  <div class="col text-center">
+                    <i class="fa fa-search fa-5x text-secondary"></i>
+                    <p class="mt-3 font-weight-bold ml-4 text-uppercase text-lg">¿Qué está buscando?</p>
                   </div>
               </div>
               <div class="container text-center" *ngIf="error">
