@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import jsPDF from 'jspdf';
+
 declare var $:any;
 
 @Component({
@@ -26,9 +28,15 @@ export class StatsComponent implements OnInit, AfterViewInit {
   formSearch: FormGroup;
 
   public graficaChartOptions = {
+    plugins: {
+      labels: {
+        // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+        render: 'value',
+      }
+    },
     responsive: true,
     scales: {yAxes: [{ticks: {beginAtZero: true}}]},
-    scaleShowVerticalLines: false
+    scaleShowVerticalLines: false,
   };
   public graficaChartColors = [
     {
@@ -82,6 +90,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
     if (tipoGrafica == 1) {
       this.tipoGrafica = "bar";
       this.graficaChartOptions = {
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
         responsive: true,
         scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         scaleShowVerticalLines: true
@@ -90,7 +104,14 @@ export class StatsComponent implements OnInit, AfterViewInit {
     }
     if (tipoGrafica == 2) {
       this.tipoGrafica = "pie";
-      this.graficaChartOptions={    responsive: true,
+      this.graficaChartOptions={   
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
+        responsive: true,
         scales: {yAxes: []},
         scaleShowVerticalLines: false};
       this.verLegend = true;
@@ -98,6 +119,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
     if (tipoGrafica == 3) {
       this.tipoGrafica = "line";
       this.graficaChartOptions = {
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
         responsive: true,
         scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         scaleShowVerticalLines: true
@@ -158,6 +185,11 @@ export class StatsComponent implements OnInit, AfterViewInit {
   downloadCanvas(event) {
     var anchor = event.target;
     anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
-    anchor.download = "grafica.png";
+    //anchor.download = "grafica.png";
+
+    var pdf = new jsPDF()
+    pdf.addImage(anchor.href, 'JPEG', 15, 40, 180, 160);
+    pdf.save('myPage.pdf'); //Download the rendered PDF.
+
   }
 }

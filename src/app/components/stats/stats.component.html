@@ -65,10 +65,10 @@
           </canvas>
         </div>
         <div  *ngIf="!graficaDisponible" class="chart">
-          <h2 class="text-center">Utilicé el filtro para hacer una consulta.</h2>
+          <h2 class="text-center">Utilice el filtro para hacer una consulta</h2>
         </div>
         <div>
-          <a href="#" class="btn btn-success text-light" *ngIf="graficaDisponible" (click)="downloadCanvas($event)"><i class="fas fa-download"></i> Descargar esta gráfica</a>
+          <a target="_blank" class="btn btn-success text-light" *ngIf="graficaDisponible" (click)="downloadCanvas($event)"><i class="fas fa-download"></i> Descargar esta gráfica</a>
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   validarExportacion = true;
   cantidad = 0;
   loading = true;
+  error = false;
 
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
@@ -51,6 +52,8 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     this.sinResultado = false
     this.validarExportacion = true
     this.datosDisponibles = false
+    this.error = false
+
     this.api.verPublicaciones().subscribe(response => {
       this.listPublicaciones=response
       this.paginacion(this.listPublicaciones.length)
@@ -61,7 +64,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
         this.sinResultado = true
       }
 
-    });
+    }, error => {this.error = true});
   }
   
   inicializarFormulario(){
@@ -101,9 +104,11 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   } 
 
   buscar(selectPais){
-    this.validarExportacion=true
-    this.sinResultado=false
-    this.datosDisponibles=false
+    this.listPublicaciones = []
+    this.sinResultado = false
+    this.validarExportacion = true
+    this.datosDisponibles = false
+    this.error = false
     if(selectPais.value=="Todos"){
       this.formSearch.get('country').setValue("")
     }else{
@@ -115,16 +120,18 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response
+      this.cantidad=this.listPublicaciones.length
       this.paginacion(this.listPublicaciones.length)
       if (this.listPublicaciones.length==0){
         this.sinResultado=true
       }
       this.datosDisponibles=true
-    });
+    }, error => {this.error = true} );
   }
 
   cambiarPagina(event){
     this.configuracionPaginacion.currentPage = event;
+    window.scrollTo(0, 0);
   }
   get formData(){ return this.formSearch.get('users') }
 }
