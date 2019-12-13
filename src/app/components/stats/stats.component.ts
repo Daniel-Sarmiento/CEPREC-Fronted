@@ -61,7 +61,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
   labels = [];
   verLegend = true;
   tipoGrafica = "bar";
-
   ngOnInit() {
     this.graficaChartType = this.tipoGrafica;
     this.graficaChartLabels = this.labels;
@@ -71,6 +70,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     $('#selectPais').selectpicker();
+    
   }
 
   obtenerOrigenes(){
@@ -153,5 +153,11 @@ export class StatsComponent implements OnInit, AfterViewInit {
       this.ngOnInit();
     });
     this.graficaDisponible = true;
+  }
+
+  downloadCanvas(event) {
+    var anchor = event.target;
+    anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
+    anchor.download = "grafica.png";
   }
 }
