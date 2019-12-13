@@ -81,6 +81,15 @@ export class StatsComponent implements OnInit, AfterViewInit {
     
   }
 
+  inicializarFormulario(){
+    this.formSearch = this.formBuilder.group({
+      country: [''],
+      year_initial: ['0'],
+      year_final: ['0'],
+      origin:['0']
+    })
+  }
+
   obtenerOrigenes(){
     this.api.verOrigenes().subscribe(response => {
       this.listaOrigenes=response;
@@ -182,14 +191,25 @@ export class StatsComponent implements OnInit, AfterViewInit {
     this.graficaDisponible = true;
   }
 
-  downloadCanvas(event) {
+  downloadCanvas(event,formatoGrafica) {
     var anchor = event.target;
-    anchor.href = document.getElementsByTagName('canvas')[0].toDataURL("image/jpeg");
-    anchor.download = "grafica.jpeg";
-
-    var pdf = new jsPDF()
-    pdf.addImage(anchor.href, 'JPEG', 15, 40, 180, 160);
-    pdf.save('myPage.pdf'); //Download the rendered PDF.
+    //PNG
+    if(formatoGrafica.value=="1"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
+      anchor.download = "grafica.png";
+    }
+    //JPEG
+    if(formatoGrafica.value=="2"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL("image/jpeg");
+      anchor.download = "grafica.jpeg";
+    }
+    //PDF
+    if(formatoGrafica.value=="3"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
+      var pdf = new jsPDF()
+      pdf.addImage(anchor.href, 'PNG', 32, 40, 150, 120);
+      pdf.save('grafica.pdf'); //Download the rendered PDF.
+    }
 
   }
 }

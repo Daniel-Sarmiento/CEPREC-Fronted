@@ -14,6 +14,9 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   americaDelNorte = ['Bermudas','Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
   americaDelSur = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','Guayana Francesa','Guyana','Paraguay','Perú','Surinam','Uruguay','Venezuela']
   americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
+  
+  americaCaribe = ['Anguilla','Antigua and Barbuda','Aruba','Bahamas','Barbados','Bermuda','British Virgin Islands', 'Cayman Islands','Cuba','Curaçao',' 	Dominica','Dominican Republic', 'Grenada','Guadeloupe','Haiti','Jamaica', 'Martinique', 'Montserrat','Puerto Rico', 'Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Trinidad and Tobago','US Virgin Islands','Martinique','Martinique','Martinique','Martinique']
+
   listPublicaciones:any
   formSearch:FormGroup;
   autoresItems:FormArray; 
@@ -114,10 +117,6 @@ export class SearcherComponent implements OnInit, AfterViewInit{
       this.formSearch.get('country').setValue("")
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
-    }
-    console.log(this.formSearch.get('year_initial').value)
-    if(this.formSearch.get('year_initial').value == "0"){
-      console.log("Alguno de los años es vacio")
     }
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response
