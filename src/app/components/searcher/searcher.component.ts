@@ -11,11 +11,17 @@ declare var $:any;
   styleUrls: ['./searcher.component.css']
 })
 export class SearcherComponent implements OnInit, AfterViewInit{
-  americaDelNorte = ['Bermudas','Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
+  americaDelNorte = ['Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
+  americaDelNorteENG = ['canada','usa','greenland','mexico','saint pierre and miquelon']
+
   americaDelSur = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','Guayana Francesa','Guyana','Paraguay','Perú','Surinam','Uruguay','Venezuela']
-  americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
+  americaDelSurENH = ['argentina','bolivia','brazil','chile','colombia','ecuador','french guiana','guyana','paraguay','peru','surinam','uruguay','venezuela']
   
-  americaCaribe = ['Anguilla','Antigua and Barbuda','Aruba','Bahamas','Barbados','Bermuda','British Virgin Islands', 'Cayman Islands','Cuba','Curaçao',' 	Dominica','Dominican Republic', 'Grenada','Guadeloupe','Haiti','Jamaica', 'Martinique', 'Montserrat','Puerto Rico', 'Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Trinidad and Tobago','US Virgin Islands','Martinique','Martinique','Martinique','Martinique']
+  americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
+  americaCentralENG = ['belize','costa rica','the savior','guatemala','honduras','nicaragua', 'panama']
+  
+  americaCaribe = ['Anguilla','Antigua and Barbuda','Aruba','Bahamas','Barbados','Bermuda','British Virgin Islands', 'Cayman Islands','Cuba','Curaçao',' 	Dominica','Dominican Republic', 'Grenada','Guadeloupe','Haiti','Jamaica', 'Martinique', 'Montserrat','Puerto Rico', 'Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Trinidad and Tobago','US Virgin Islands']
+  americaCaribeENG = ['anguilla','antigua and barbuda','aruba','bahamas','barbados','bermuda','british virgin islands','cayman islands','cuba','curaçao','dominica','dominican republic','grenada','guadeloupe','haiti','jamaica','martinique','montserrat','puerto Rico','saint Kitts and nevis','saint lucia','saint vincent and the grenadines','trinidad and tobago','us virgin islands']
 
   listPublicaciones:any
   formSearch:FormGroup;
@@ -118,6 +124,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
     }
+    console.log(this.formSearch.value)
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response
       this.cantidad=this.listPublicaciones.length

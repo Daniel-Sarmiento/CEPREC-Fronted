@@ -37,17 +37,20 @@
             <div class="form-group">
               <label for="selectPais">País</label>
               <select  class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
-                <option [value]="">Todos</option>
-                <optgroup label="América del Norte">
-                  <option *ngFor="let pais of americaDelNorte" [value]="pais">{{pais}}</option>
-                </optgroup>
-                <optgroup label="América Central">
-                  <option *ngFor="let pais of americaCentral" [value]="pais">{{pais}}</option>  
-                </optgroup>
-                <optgroup label="América del Sur">
-                  <option *ngFor="let pais of americaDelSur" [value]="pais">{{pais}}</option>
-                </optgroup>
-              </select>
+                  <option [value]="">Todos</option>
+                  <optgroup label="América del Norte">
+                    <option *ngFor="let pais of americaDelNorte; let i = index" [value]="americaDelNorteENG[i]">{{pais}}</option>
+                  </optgroup>
+                  <optgroup label="América Central">
+                    <option *ngFor="let pais of americaCentral; let i = index" [value]="americaCentralENG[i]">{{pais}}</option>  
+                  </optgroup>
+                  <optgroup label="América del Sur">
+                    <option *ngFor="let pais of americaDelSur; let i = index" [value]="americaDelSurENH[i]">{{pais}}</option>
+                  </optgroup>
+                  <optgroup label="América del Caribe">
+                    <option *ngFor="let pais of americaCaribe; let i = index" [value]="americaCaribeENG[i]">{{pais}}</option>
+                  </optgroup>
+                </select>
             </div>
             
             <div class="form-group">

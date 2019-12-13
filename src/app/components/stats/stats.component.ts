@@ -12,9 +12,17 @@ declare var $:any;
   styleUrls: ['./stats.component.css']
 })
 export class StatsComponent implements OnInit, AfterViewInit {
-  americaDelNorte = ['Bermudas', 'Canada', 'Estados Unidos', 'Groenlandia', 'México', 'San Pedro y Miquelón']
-  americaDelSur = ['Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Ecuador', 'Guayana Francesa', 'Guyana', 'Paraguay', 'Perú', 'Surinam', 'Uruguay', 'Venezuela']
-  americaCentral = ['Belice', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Panamá']
+  americaDelNorte = ['Canada','Estados Unidos','Groenlandia','México','San Pedro y Miquelón']
+  americaDelNorteENG = ['canada','usa','greenland','mexico','saint pierre and miquelon']
+
+  americaDelSur = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','Guayana Francesa','Guyana','Paraguay','Perú','Surinam','Uruguay','Venezuela']
+  americaDelSurENH = ['argentina','bolivia','brazil','chile','colombia','ecuador','french guiana','guyana','paraguay','peru','surinam','uruguay','venezuela']
+  
+  americaCentral = ['Belice','Costa Rica','El Salvador','Guatemala','Honduras','Nicaragua','Panamá']
+  americaCentralENG = ['belize','costa rica','the savior','guatemala','honduras','nicaragua', 'panama']
+  
+  americaCaribe = ['Anguilla','Antigua and Barbuda','Aruba','Bahamas','Barbados','Bermuda','British Virgin Islands', 'Cayman Islands','Cuba','Curaçao',' 	Dominica','Dominican Republic', 'Grenada','Guadeloupe','Haiti','Jamaica', 'Martinique', 'Montserrat','Puerto Rico', 'Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Trinidad and Tobago','US Virgin Islands']
+  americaCaribeENG = ['anguilla','antigua and barbuda','aruba','bahamas','barbados','bermuda','british virgin islands','cayman islands','cuba','curaçao','dominica','dominican republic','grenada','guadeloupe','haiti','jamaica','martinique','montserrat','puerto Rico','saint Kitts and nevis','saint lucia','saint vincent and the grenadines','trinidad and tobago','us virgin islands']
 
   constructor(private api: ApiService, private formBuilder: FormBuilder) {
     this.formSearch = this.formBuilder.group({
