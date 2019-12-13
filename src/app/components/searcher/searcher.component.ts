@@ -104,6 +104,7 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   } 
 
   buscar(selectPais){
+    window.scrollTo(0, 0);
     this.listPublicaciones = []
     this.sinResultado = false
     this.validarExportacion = true

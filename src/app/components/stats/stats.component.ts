@@ -185,11 +185,11 @@ export class StatsComponent implements OnInit, AfterViewInit {
   downloadCanvas(event) {
     var anchor = event.target;
     anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
-    //anchor.download = "grafica.png";
+    anchor.download = "grafica.jpg";
 
-    var pdf = new jsPDF()
+    /* var pdf = new jsPDF()
     pdf.addImage(anchor.href, 'JPEG', 15, 40, 180, 160);
-    pdf.save('myPage.pdf'); //Download the rendered PDF.
+    pdf.save('myPage.pdf'); //Download the rendered PDF. */
 
   }
 }

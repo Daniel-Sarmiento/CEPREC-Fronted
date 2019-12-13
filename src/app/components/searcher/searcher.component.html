@@ -54,7 +54,7 @@
               <label>Intervalo por año</label>
               <div class="row">
                 <div class="col-md-6">
-                  <input type="number" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
+                  <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  onkeyup="this.value=this.value.replace(/[^\d]/,'')" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
                 </div>
                 <div class="col-md-6">
                   <input type="number" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
@@ -135,7 +135,7 @@
               <div class="container text-center" *ngIf="error">
                   <div class="col text-center">
                     <i class="fa fa-error fa-5x text-secondary"></i>
-                    <p class="mt-3 font-weight-bold ml-4 text-uppercase text-lg">Error</p>
+                    <p class="mt-3 font-weight-bold ml-2 text-uppercase text-lg">Error</p>
                   </div>
               </div>
               
