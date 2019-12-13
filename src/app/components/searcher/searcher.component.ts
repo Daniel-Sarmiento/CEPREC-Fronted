@@ -17,11 +17,14 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   listPublicaciones:any
   formSearch:FormGroup;
   autoresItems:FormArray; 
-  configuracionPaginacion: any
-  datosDisponibles=false
-  sinResultado=false
-  validarExportacion=true
-  cantidad=0
+  configuracionPaginacion:any;
+  datosDisponibles = false;
+  sinResultado = false;
+  validarExportacion = true;
+  cantidad = 0;
+  loading = true;
+  error = false;
+
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
     this.configuracionPaginacion = {
@@ -46,18 +49,22 @@ export class SearcherComponent implements OnInit, AfterViewInit{
     }
   }
   obtenerPublicaciones(){
-    this.sinResultado=false
-    this.validarExportacion=true
-    this.datosDisponibles=false
+    this.sinResultado = false
+    this.validarExportacion = true
+    this.datosDisponibles = false
+    this.error = false
+
     this.api.verPublicaciones().subscribe(response => {
       this.listPublicaciones=response
       this.paginacion(this.listPublicaciones.length)
-      this.datosDisponibles=true
+      this.datosDisponibles = true
       this.cantidad=this.listPublicaciones.length
-      if (this.listPublicaciones.length==0){
-        this.sinResultado=true
+
+      if (this.listPublicaciones.length == 0){
+        this.sinResultado = true
       }
-    });
+
+    }, error => {this.error = true});
   }
   
   inicializarFormulario(){
@@ -97,30 +104,31 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   } 
 
   buscar(selectPais){
-    this.validarExportacion=true
-    this.sinResultado=false
-    this.datosDisponibles=false
+    window.scrollTo(0, 0);
+    this.listPublicaciones = []
+    this.sinResultado = false
+    this.validarExportacion = true
+    this.datosDisponibles = false
+    this.error = false
     if(selectPais.value=="Todos"){
       this.formSearch.get('country').setValue("")
     }else{
       this.formSearch.get('country').setValue(selectPais.value)
     }
-    console.log(this.formSearch.value('year_initial'))
-    if(this.formSearch.value('year_initial') == "0"){
-      console.log("Alguno de los años es vacio")
-    }
     this.api.buscarPublicaciones(this.formSearch.value).subscribe(response => {
       this.listPublicaciones=response
+      this.cantidad=this.listPublicaciones.length
       this.paginacion(this.listPublicaciones.length)
       if (this.listPublicaciones.length==0){
         this.sinResultado=true
       }
       this.datosDisponibles=true
-    });
+    }, error => {this.error = true} );
   }
 
   cambiarPagina(event){
     this.configuracionPaginacion.currentPage = event;
+    window.scrollTo(0, 0);
   }
   get formData(){ return this.formSearch.get('users') }
 }

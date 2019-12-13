@@ -12,6 +12,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {ExcelService} from 'src/app/service/excel.service';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule} from '@angular/common/http';
+import 'chartjs-plugin-labels';
 
 @NgModule({
   declarations: [

@@ -6,6 +6,8 @@
         <h5 class="text-light text-center tittle">
           <strong>FILTRO DE ESTADISTICAS</strong>
         </h5>
+        <button style="color:black;margin: 0px; padding: 0px;position: relative;" type="button" class="btn btn-warning btn-lg btn-block" (click)="inicializarFormulario()">Limpiar filtro</button>
+        <hr>
         <div class="form-group">
           <label for="selectPais">País</label>
           <select  class="selectpicker form-control" id="selectPais" #selectPais data-style="btn" data-live-search="true">
@@ -65,10 +67,19 @@
           </canvas>
         </div>
         <div  *ngIf="!graficaDisponible" class="chart">
-          <h2 class="text-center">Utilicé el filtro para hacer una consulta.</h2>
+          <h2 class="text-center">Utilice el filtro para hacer una consulta</h2>
         </div>
-        <div>
-          <a href="#" class="btn btn-success text-light" *ngIf="graficaDisponible" (click)="downloadCanvas($event)"><i class="fas fa-download"></i> Descargar esta gráfica</a>
+        <div style="margin: 10px;" class="row" *ngIf="graficaDisponible">
+          <div class="col-md-3">
+            <select #formatoGrafica class="form-control">
+            <option [value]="1" selected>PNG</option>
+            <option [value]="2">JPEG</option>
+            <option [value]="3">PDF</option>
+          </select>
+          </div>
+          <div class="col-md-4">
+            <a target="_blank" class="btn btn-success text-light"  (click)="downloadCanvas($event,formatoGrafica)"><i class="fas fa-download"></i> Descargar esta gráfica</a>
+          </div>  
         </div>
       </div>
     </div>

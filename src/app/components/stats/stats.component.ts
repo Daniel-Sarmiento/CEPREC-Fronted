@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import jsPDF from 'jspdf';
+
 declare var $:any;
 
 @Component({
@@ -26,9 +28,15 @@ export class StatsComponent implements OnInit, AfterViewInit {
   formSearch: FormGroup;
 
   public graficaChartOptions = {
+    plugins: {
+      labels: {
+        // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+        render: 'value',
+      }
+    },
     responsive: true,
     scales: {yAxes: [{ticks: {beginAtZero: true}}]},
-    scaleShowVerticalLines: false
+    scaleShowVerticalLines: false,
   };
   public graficaChartColors = [
     {
@@ -73,6 +81,15 @@ export class StatsComponent implements OnInit, AfterViewInit {
     
   }
 
+  inicializarFormulario(){
+    this.formSearch = this.formBuilder.group({
+      country: [''],
+      year_initial: ['0'],
+      year_final: ['0'],
+      origin:['0']
+    })
+  }
+
   obtenerOrigenes(){
     this.api.verOrigenes().subscribe(response => {
       this.listaOrigenes=response;
@@ -82,6 +99,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
     if (tipoGrafica == 1) {
       this.tipoGrafica = "bar";
       this.graficaChartOptions = {
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
         responsive: true,
         scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         scaleShowVerticalLines: true
@@ -90,7 +113,14 @@ export class StatsComponent implements OnInit, AfterViewInit {
     }
     if (tipoGrafica == 2) {
       this.tipoGrafica = "pie";
-      this.graficaChartOptions={    responsive: true,
+      this.graficaChartOptions={   
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
+        responsive: true,
         scales: {yAxes: []},
         scaleShowVerticalLines: false};
       this.verLegend = true;
@@ -98,6 +128,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
     if (tipoGrafica == 3) {
       this.tipoGrafica = "line";
       this.graficaChartOptions = {
+        plugins: {
+          labels: {
+            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+            render: 'value',
+          }
+        },
         responsive: true,
         scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         scaleShowVerticalLines: true
@@ -155,9 +191,25 @@ export class StatsComponent implements OnInit, AfterViewInit {
     this.graficaDisponible = true;
   }
 
-  downloadCanvas(event) {
+  downloadCanvas(event,formatoGrafica) {
     var anchor = event.target;
-    anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
-    anchor.download = "grafica.png";
+    //PNG
+    if(formatoGrafica.value=="1"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
+      anchor.download = "grafica.png";
+    }
+    //JPEG
+    if(formatoGrafica.value=="2"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL("image/jpeg");
+      anchor.download = "grafica.jpeg";
+    }
+    //PDF
+    if(formatoGrafica.value=="3"){
+      anchor.href = document.getElementsByTagName('canvas')[0].toDataURL();
+      var pdf = new jsPDF()
+      pdf.addImage(anchor.href, 'PNG', 32, 40, 150, 120);
+      pdf.save('grafica.pdf'); //Download the rendered PDF.
+    }
+
   }
 }
