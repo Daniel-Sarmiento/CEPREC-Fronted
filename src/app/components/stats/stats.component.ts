@@ -40,6 +40,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
       labels: {
         // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
         render: 'value',
+        fontColor: '#000',
       }
     },
     responsive: true,
@@ -111,6 +112,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
           labels: {
             // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
             render: 'value',
+            fontColor: '#000',
           }
         },
         responsive: true,
@@ -126,6 +128,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
           labels: {
             // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
             render: 'value',
+            fontColor: '#fff',
           }
         },
         responsive: true,
@@ -140,6 +143,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
           labels: {
             // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
             render: 'value',
+            fontColor: '#000',
           }
         },
         responsive: true,
