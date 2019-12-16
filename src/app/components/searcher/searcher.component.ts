@@ -38,7 +38,10 @@ export class SearcherComponent implements OnInit, AfterViewInit{
   constructor(private api: ApiService,private formBuilder:FormBuilder,private excelService:ExcelService){  
     this.inicializarFormulario();
     this.configuracionPaginacion = {
-      id: 'custom'
+      id: 'custom',
+      itemsPerPage:10,
+      currentPage: 1,
+      totalItems: 10
     }
   }
 
