@@ -60,7 +60,7 @@
                   <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  onkeyup="this.value=this.value.replace(/[^\d]/,'')" formControlName="year_initial" class="form-control mr-1 input"  maxlength="4" placeholder="" >
                 </div>
                 <div class="col-md-6">
-                  <input type="number" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
+                  <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" formControlName="year_final" class="form-control mr-1 input" maxlength="4"  placeholder="" >
                 </div>
               </div>
             </div>
