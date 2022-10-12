@@ -30,7 +30,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "jquery": "^3.4.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.5.1",
     "ng2-charts": "^2.2.2",
     "ngx-pagination": "^4.1.0",
     "popper.js": "^1.15.0",
